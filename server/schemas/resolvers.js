@@ -1,29 +1,42 @@
-// const { Book, User, User, User } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
+const { Question, User } = require('../models');
+const { signToken } = require('../utils/auth');
 
-// const resolvers = {
-//   Query: {
-//     User: async () => {
-//       return User.find({});
-//     },
-//     Book: async (parent, { _id }) => {
-//       const params = _id ? { _id } : {};
-//       return Book.find(params);
-//     },
-//   },
-//   Mutation: {
-//     createUser: async (parent, args) => {
-//       const User = await User.create(args);
-//       return User;
-//     },
-//     createBook: async (parent, { _id, techNum }) => {
-//       const Book = await Book.findOneAndUpdate(
-//         { _id },
-//         // { $inc: { [`tech${techNum}_votes`]: 1 } },
-//         { new: true }
-//       );
-//       return ;
-//     },
-//   },
-// };
+const resolvers = {
+    Query: {
+        me: async (parent, args, context) => {
+            if (context.user) {
+                const userData = await User.
+                    findOne({ _id: context.user._id })
+                    .select('-__V -password')
+                return userData
+            }
+            throw new AuthenticationError('Error')
+        },
+    },
 
-// module.exports = resolvers;
+    Mutation: {
+        login: async (parent, { username, password }) => {
+            const user = await User.findOne({ username });
+            if (!user) {
+                throw new AuthenticationError('Incorrect login information, please try again')
+            }
+            const token = signToken(user);
+            return { token, user };
+        },
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
+            const token = signToken(user);
+            return { token, user };
+        },
+        updateUser: async (parent, args, context) => {
+            if (context.user) {
+                return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+            }
+
+            throw new AuthenticationError('Not logged in');
+        }
+    }
+};
+
+module.exports = resolvers
