@@ -2,7 +2,9 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-require('dotenv').config();
+const socketIO = require('socket.io');
+const http = require('http');
+require('dotenv').config({path: '../.env'});
 
 
 const { typeDefs, resolvers } = require('./schemas');
@@ -30,6 +32,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+let httpServer = http.createServer(app);
+let io = socketIO(httpServer);
+
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
@@ -37,7 +42,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
   server.applyMiddleware({ app });
   
   db.once('open', () => {
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
     })
