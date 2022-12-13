@@ -7,11 +7,13 @@ function Home() {
         <Card>
           <Card.Body>
             <Card.Title>Play Solo</Card.Title>
+            <Card.Img variant="bottom" src="https://via.placeholder.com/300" />
           </Card.Body>
         </Card>
         <Card>
           <Card.Body>
             <Card.Title>Play With Friends</Card.Title>
+            <Card.Img variant="bottom" src="https://via.placeholder.com/300" />
           </Card.Body>
         </Card>
       </CardGroup>

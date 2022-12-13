@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button, Card, CardGroup } from 'react-bootstrap';
+
 function Login() {
   return (
     <div className="login">
@@ -7,11 +8,11 @@ function Login() {
         <Card>
           <Card.Body>
             <Form>
-              <Form.Group controlId="formEmail">
+              <Form.Group controlId="loginformEmail">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control type="email" placeholder="Example@email.com" />
               </Form.Group>
-              <Form.Group controlId="formPassword">
+              <Form.Group controlId="loginformPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
@@ -22,11 +23,11 @@ function Login() {
         <Card>
           <Card.Body>
             <Form>
-              <Form.Group controlId="formEmail">
+              <Form.Group controlId="signupformEmail">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control type="email" placeholder="Example@email.com" />
               </Form.Group>
-              <Form.Group controlId="formPassword">
+              <Form.Group controlId="signupformPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" />
               </Form.Group>
