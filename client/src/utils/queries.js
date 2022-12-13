@@ -7,8 +7,8 @@ export const GET_PROFILE = gql`
         email
         _id
         password
-        questions{
-            questionId
+        createdQuestions{
+            _id
             text
         }
     }
@@ -17,7 +17,7 @@ export const GET_PROFILE = gql`
 export const GET_QUESTIONS = gql`
 {
     questions {
-        questionId
         text
+        _id
     }
 }`
