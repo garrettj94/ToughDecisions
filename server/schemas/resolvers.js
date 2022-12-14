@@ -35,8 +35,19 @@ const resolvers = {
             }
 
             throw new AuthenticationError('Not logged in');
+        },
+        createQuestion: async (parent, args, context) => {
+            if (context.user) {
+                return await Question.create(req.body).then((question) => {
+                User.findOneAndUpdate({_id: context.user._id}, {$push: { classes: question }}, { new: true })
+            });
         }
+        throw new AuthenticationError('You must be logged in to create a question. Please log in')
+        },
+    //     deleteQuestion: async (parent, args, context) => {
+            
+    //     }
     }
-};
+}
 
 module.exports = resolvers

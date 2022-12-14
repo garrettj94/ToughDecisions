@@ -5,12 +5,11 @@ const questionSchema = new Schema({
         type: String,
         required: true,
     },
-    questionId: {
-        type: String,
-        required: true,
+    userId: {
+        type: Schema.Types.ObjectId
     }
 })
 
-const Question = model('Question', questionSchema);
+const Question = model('Question', questionSchema)
 
 module.exports = Question

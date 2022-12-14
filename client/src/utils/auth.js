@@ -4,7 +4,7 @@ import decode from 'jwt-decode';
 // create new authentication class
 class Auth {
     // get user data
-    getUserAccount() {
+    getProfile() {
         return decode(this.getToken());
     }
 
