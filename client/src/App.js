@@ -30,8 +30,9 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const socket = io('http://localhost:3001')
-  socket.emit("hello", { name: "John" });
+  // const socket = io('http://localhost:3001')
+  // socket.emit("hello", { name: "John" });
+  const socket = io('http://localhost:3001');
   return (
     <ApolloProvider client={client}>
       <div>
@@ -40,7 +41,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
-            <Route path="/answer" element={<AnswerQ />}></Route>
+            <Route path="/answer" element={<AnswerQ socket={socket} />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/store" element={<Store />}></Route>
             <Route path="/createq" element={<CreateQ />}></Route>
