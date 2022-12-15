@@ -2,10 +2,10 @@ import React, { useState} from "react";
 import { CREATE_QUESTION } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 import { Form, Button, Card } from 'react-bootstrap';
-function createQ() {
+function CreateQ() {
   const [questionFormData, setQuestionFormData] = useState({ text: '' });
   const [showAlert, setShowAlert] = useState(false);
-  const [createQuestion, { error }] = useMutation(CREATE_QUESTION);
+  const [createQuestion] = useMutation(CREATE_QUESTION);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -17,7 +17,7 @@ function createQ() {
 
     const form = event.currentTarget;
     try {
-      const { data } = await createQuestion({
+      await createQuestion({
         variables: { ...questionFormData }
       });
     } catch (err) {
@@ -44,4 +44,4 @@ function createQ() {
   );
 }
 
-export default createQ
+export default CreateQ

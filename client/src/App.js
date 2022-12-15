@@ -6,8 +6,9 @@ import Login from './components/login'
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context'
 import CreateQ from './components/createQ';
-import answerQ from './components/answerQ';
+import AnswerQ from './components/answerQ';
 import Profile from './components/profile';
+import Store from './components/store';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {io} from 'socket.io-client'
 
@@ -39,9 +40,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/answer" element={<AnswerQ />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/store" element={<Store />}></Route>
             <Route path="/createq" element={<CreateQ />}></Route>
-            <Route path="/room" element={<answerQ />}></Route>
           </Routes>
         </Router>
       </div>

@@ -2,9 +2,10 @@ import React,{useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
+import auth from '../utils/auth';
 
 function Navigationbar() {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
   return (
     <nav>
       <Navbar expanded={expanded} sticky="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -15,7 +16,9 @@ function Navigationbar() {
               <Nav.Link to="/" as={Link}>Home</Nav.Link>
               <Nav.Link to="/store" as={Link}>Store</Nav.Link>
               <Nav.Link to="/profile" as={Link}>Profile</Nav.Link>
-              <Nav.Link to="/login" as={Link}>Login / Sign Up</Nav.Link>
+              {auth.isLoggedIn() ? 
+              (<Nav.Link to="/login" as={Link} onClick={auth.logout}>Logout</Nav.Link>):
+              (<Nav.Link to="/login" as={Link}>Login / Sign Up</Nav.Link>)}
             </Nav>
           </Container>
         </Navbar.Collapse>
