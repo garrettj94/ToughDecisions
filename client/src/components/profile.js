@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardGroup, Row } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 function profile() {
     return (
         <div>
@@ -9,19 +9,7 @@ function profile() {
             <br></br>
             <Row md={3}>
                     <Card >
-                        <Card.Body>Step on a bed of hot charcoal</Card.Body>
-                    </Card>
-                    <Card >
-                        <Card.Body>Step on a bed of hot charcoal</Card.Body>
-                    </Card>
-                    <Card >
-                        <Card.Body>Step on a bed of hot charcoal</Card.Body>
-                    </Card>
-                    <Card >
-                        <Card.Body>Step on a bed of hot charcoal</Card.Body>
-                    </Card>
-                    <Card >
-                        <Card.Body>Step on a bed of hot charcoal</Card.Body>
+                        <Card.Body>Example would you rather question</Card.Body>
                     </Card>
             </Row>
         </div>
