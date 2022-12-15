@@ -9,6 +9,7 @@ import CreateQ from './components/createQ';
 import answerQ from './components/answerQ';
 import Profile from './components/profile';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {io} from 'socket.io-client'
 
 const httpLink = createHttpLink({ uri: '/graphql' })
 
@@ -28,6 +29,8 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const socket = io('http://localhost:3001')
+  socket.emit("hello", { name: "John" });
   return (
     <ApolloProvider client={client}>
       <div>
