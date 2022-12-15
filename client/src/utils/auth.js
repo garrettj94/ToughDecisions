@@ -10,8 +10,9 @@ class Auth {
 
     // check if user is logged in and if token is still valid
     isLoggedIn() {
-    const token = this.getToken();
-    return !!token && !this.isTokenExpired(token);
+        console.log("Trying to see if logged in");
+        const token = this.getToken();
+        return !!token && !this.isTokenExpired(token);
     }
 
     // check if token is expired

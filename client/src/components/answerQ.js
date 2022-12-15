@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardGroup, Button } from 'react-bootstrap';
 import { io,} from 'socket.io-client'
 
-function answerQ() {
+function AnswerQ() {
     const socket = io('http://localhost:3001');
 
     function leaveGame(){
@@ -28,7 +29,7 @@ function answerQ() {
                 </Card>
                 <Card>
                     <Card.Body>
-                        <Button onClick={ leaveGame
+                        <Button as={Link} to="/" onClick={ leaveGame
                             
                         }>
                             leave game
@@ -39,4 +40,4 @@ function answerQ() {
         </div>
     );
 }
-export default answerQ
+export default AnswerQ
