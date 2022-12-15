@@ -4,7 +4,7 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const socketIO = require('socket.io');
 const http = require('http');
-require('dotenv').config({path: '../.env'});
+require('dotenv').config({ path: '../.env' });
 
 
 const { typeDefs, resolvers } = require('./schemas');
@@ -45,21 +45,91 @@ let io = socketIO(httpServer, {
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
-  
+
   db.once('open', () => {
     httpServer.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
     })
   })
-  };
-  
+};
+
 // Call the async function to start the server
 startApolloServer(typeDefs, resolvers);
 
+
+let question1 = "";
+let question2 = "";
+let vote1 = 0;
+let vote2 = 0;
+let inGame = false;
 io.on("connection", socket => {
-  socket.join("answerQ.js");
+  // socket.join("answerQ.js");
+  socket.on("question-created", (isQuestion1, question) => {
+    if (isQuestion1) {
+      question1 = question;
+      socket.broadcast.emit("question-created-server", isQuestion1, question);
+    } else {
+      question2 = question;
+      socket.broadcast.emit("question-created-server", isQuestion1, question);
+    }
+  });
+
+  socket.on("vote", (isQuestion1) => {
+    if (isQuestion1) {
+      vote1++;
+    } else {
+      vote2++;
+    }
+  });
+
+  socket.on("start-game", () => {
+    if (inGame) return;
+    io.emit("next-question");
+    startGame();
+  });
+
+  socket.on("end-game", () => {
+
+  });
+
+
 });
+
+const startGame = () => {
+  inGame = true;
+  let secondsLeft = 20;
+  console.log("starting");
+  const timer = setInterval(() => {
+    secondsLeft--;
+    console.log(secondsLeft);
+    if (secondsLeft === 0) {
+      console.log("ending");
+      io.emit("end-question", vote1, vote2);
+      clearInterval(timer);
+      nextGame();
+    }
+  }, 1000);
+};
+
+const nextGame = () => {
+  question1 = "";
+  question2 = "";
+  vote1 = 0;
+  vote2 = 0;
+  let secondsLeft = 5;
+  console.log("Next game");
+  const timer = setInterval(() => {
+    console.log(secondsLeft);
+    secondsLeft--;
+    if (secondsLeft === 0) {
+      io.emit("next-question");
+      clearInterval(timer);
+      startGame();
+    }
+  }, 1000);
+
+}
 
 // io.to("room1").emit("some event");
 
