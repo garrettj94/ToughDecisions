@@ -43,7 +43,7 @@ const resolvers = {
         createQuestion: async (parent, args, context) => {
             if (context.user) {
                 return await Question.create(req.body).then((question) => {
-                User.findOneAndUpdate({_id: context.user._id}, {$push: { classes: question }}, { new: true })
+                User.findOneAndUpdate({_id: context.user._id}, {$push: { questions: question }}, { new: true })
             });
         }
         throw new AuthenticationError('You must be logged in to create a question. Please log in')

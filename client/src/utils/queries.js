@@ -2,17 +2,16 @@ import { gql } from '@apollo/client'
 
 export const GET_PROFILE = gql`
 {
-    user {
-        username
-        email
-        _id
-        password
-        createdQuestions{
-            _id
-            text
-        }
+  me {
+    _id
+    questions {
+      _id
+      text
     }
-}`
+    username
+  }
+
+}`;
 
 export const GET_QUESTIONS = gql`
 {
@@ -20,4 +19,4 @@ export const GET_QUESTIONS = gql`
         text
         _id
     }
-}`
+}`;

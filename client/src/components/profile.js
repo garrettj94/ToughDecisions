@@ -8,18 +8,18 @@ function Profile() {
 
     return (
         <div>
-            <h1>{userData.username}User's Profile</h1>
+            <h1>{userData.username}'s Profile</h1>
             <img className="thumbnail" alt="placeholder" src="https://via.placeholder.com/150"></img>
             <br></br>
             <br></br>
             <Row md={3}>
-            {userData.createdQuestions.map((question) => {
+            {/* {userData.questions.map((question) => {
                 return (
                     <Card>
                         <Card.Body key={question.questionId}>{question.text}Example would you rather question</Card.Body>
                     </Card>
                 )
-            })}
+            })} */}
                     
             </Row>
         </div>
