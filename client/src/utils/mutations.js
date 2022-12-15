@@ -9,7 +9,7 @@ mutation login($email: String!, $password: String!) {
             username
         }
     }
-}`
+}`;
 
 export const CREATE_USER = gql`
 mutation Mutation($username: String!, $email: String!, $password: String!) {
@@ -29,7 +29,7 @@ mutation createQuestion($text: String!) {
         _id
         username
     }
-}`
+}`;
 
 export const DELETE_QUESTION = gql`
 mutation deleteQuestion($text: String!) {
@@ -37,4 +37,4 @@ mutation deleteQuestion($text: String!) {
         _id
         username
     }
-}`
+}`;

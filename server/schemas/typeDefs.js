@@ -6,10 +6,11 @@ const typeDefs = gql`
         username: String
         email: String
         password: String
-        classes: [questionSchema]
+        questions: [questionSchema]
     }
 
     type questionSchema {
+        _id: ID
         text: String
     }
 
