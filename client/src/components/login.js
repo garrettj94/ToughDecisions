@@ -43,6 +43,32 @@ function Login() {
     });
   };
 
+  const signupFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      const { data } = await createUser({
+        variables: { ...userFormData }
+      });
+      Auth.login(data.createUser.token);
+    } catch (err) {
+      console.error(err);
+      setShowAlert(true);
+    }
+
+    setUserFormData({
+      username: '',
+      email: '',
+      password: '',
+    });
+  }
+
   return (
     <div className="login">
       <CardGroup>
@@ -63,7 +89,7 @@ function Login() {
         </Card>
         <Card>
           <Card.Body>
-            <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+            <Form noValidate validated={validated} onSubmit={signupFormSubmit}>
               <Form.Group controlId="signupformEmail">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required/>
