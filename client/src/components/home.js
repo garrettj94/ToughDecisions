@@ -41,23 +41,22 @@ function Home() {
   return (
     <div className="home">
       <CardGroup>
-        <Card>
+        <Card  >
           <Card.Body>
-            <Form>
+            <Form className="soloStart">
               <Form.Group>
-                <Form.Label>Solo Game</Form.Label>
+                <Form.Label className="soloWords">Solo Game</Form.Label>
               </Form.Group>
-              <Button variant="secondary" id="SoloPlaybtn"to="/answer" as={Link}
+              <Button className="soloPlayBtn" variant="secondary" id="SoloPlayBtn" to="/answer" as={Link}
               > Play Game </Button>
             </Form>
-            {/* <Card.Img variant="bottom" src="https://via.placeholder.com/300" /> */}
           </Card.Body>
         </Card>
         <Card>
           <Card.Body>
-          <Form>
-              <Form.Group>
-                <Form.Label>Play With Friends!</Form.Label>
+          <Form className="multiStart">
+              <Form.Group >
+                <Form.Label className="Friends">Play With Friends!</Form.Label>
               </Form.Group>
               <Button variant="secondary"  id="CreateGameBtn" onClick={ 
                createGame
@@ -67,7 +66,6 @@ function Home() {
                joinGame
               }> Join Game </Button>
             </Form>
-            {/* <Card.Img variant="bottom" src="https://via.placeholder.com/300" /> */}
           </Card.Body>
         </Card>
       </CardGroup>
