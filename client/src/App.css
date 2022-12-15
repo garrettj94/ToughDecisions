@@ -24,10 +24,6 @@
   color: white;
 }
 
-#CreateGameBtn{
-  position: relative;
-  left: 50%;
-}
 
 .App-link {
   color: #61dafb;
@@ -40,4 +36,108 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.soloStart{
+  position: relative;
+  height: 740px;
+  background-image: url(./assets/thinking.png);
+  background-size: cover;
+ 
+}
+.soloWords{
+  display: flex;
+  font-size: xx-large;
+  /* position: relative;
+  left: 31%; */
+  justify-content: center;
+}
+
+#SoloPlayBtn{
+  position: relative;
+  left: 35%;
+  top: 40%;
+  font-size: xx-large;
+  text-decoration: underline;
+  font-family: cursive, fantasy;
+}
+
+.multiStart{
+  position: relative;
+  height: 740px;
+  background-image: url(./assets/groupcriticalthinking.png);
+  background-size: cover;
+ 
+
+ 
+}
+.Friends{
+  display: flex;
+  font-size: xx-large;
+  /* position: relative;
+  left: 31%; */
+  justify-content: center;
+}
+#CreateGameBtn{
+  position: relative;
+  left: 55%;
+  top: 300px;
+  font-size: xx-large;
+  text-decoration: underline;
+  font-family: cursive, fantasy;
+}
+
+#JoinGameBtn{
+  position: relative;
+  right: 10%;
+  top: 300px;
+  font-size: xx-large;
+  text-decoration: underline;
+  font-family: cursive, fantasy;
+}
+
+.Game{
+  position: relative;
+  top: 100px;
+  height: 200px;
+
+  
+
+}
+
+.optionOne{
+  position: relative;
+  left: 11%;
+  top: 100%;
+  height: 90%;
+  width: 70%;
+  font-size: xx-large;
+ 
+
+}
+
+.optionTwo{
+  position: relative;
+  left: 9%;
+  top: 100%;
+  height: 90%;
+  width: 70%;
+  font-size: xx-large;
+ 
+
+}
+
+.leaveBtn{
+  position: relative;
+  left: 32%;
+  top: 450px;
+  height: 100px;
+  width: 30%;
+
+
+}
+#leaveGameBtn{
+  text-decoration: underline;
+  position: relative;
+  top: 30px;
 }
