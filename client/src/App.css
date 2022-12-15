@@ -24,6 +24,11 @@
   color: white;
 }
 
+#CreateGameBtn{
+  position: relative;
+  left: 50%;
+}
+
 .App-link {
   color: #61dafb;
 }
