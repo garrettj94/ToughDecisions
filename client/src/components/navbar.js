@@ -15,6 +15,7 @@ function Navigationbar() {
               <Nav.Link to="/" as={Link}>Home</Nav.Link>
               <Nav.Link to="/store" as={Link}>Store</Nav.Link>
               <Nav.Link to="/profile" as={Link}>Profile</Nav.Link>
+              <Nav.Link to="/login" as={Link}>Login / Sign Up</Nav.Link>
             </Nav>
           </Container>
         </Navbar.Collapse>
