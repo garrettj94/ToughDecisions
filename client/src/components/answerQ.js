@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CREATE_QUESTION } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 import { Link } from 'react-router-dom';
 import { Card, CardGroup, Button, Form } from 'react-bootstrap';
-import { io} from 'socket.io-client';
 
 // Step 1 add flag from socket io when question is active
 // The flag will make questions render on page
@@ -11,39 +10,50 @@ import { io} from 'socket.io-client';
 // When timer runs out backend socket emits event to change flag to active and loads new questions
 
 function AnswerQ({socket}) {
-    // const socket = io('http://localhost:3001');
-    socket.emit("start-game");
-    socket.on("end-question", (voteCount1, voteCount2) => {
-        setVoteCount1(voteCount1);
-        setVoteCount2(voteCount2);
-        setFlag(false);
-    });
-    socket.on("next-question", () => {
-        setOptionOne('');
-        setOptionTwo('');
-        setQuestionAnswered({ questionOne: false, questionTwo: false });
-        setVoteCount1(0);
-        setVoteCount2(0);
-        setFlag(true);
-    });
-    socket.on("question-created-server", (isQuestion1, question) => {
-        if (isQuestion1) {
-            setOptionOne(question);
-            setQuestionAnswered({...questionAnswered, questionOne: true});
-        } else {
-            setOptionTwo(question);
-            setQuestionAnswered({...questionAnswered, questionTwo: true});
-        }
-    });
-
     const [flag, setFlag] = useState(true);
-    const [questionAnswered, setQuestionAnswered] = useState({ questionOne: false, questionTwo: false });
+    const [questionOneAnswered, setQuestionOneAnswered] = useState(false);
+    const [questionTwoAnswered, setQuestionTwoAnswered] = useState(false);
     const [voteCount1, setVoteCount1] = useState(0);
     const [voteCount2, setVoteCount2] = useState(0);
     const [optionOne, setOptionOne] = useState('');
     const [optionTwo, setOptionTwo] = useState('');
-    const [showAlert, setShowAlert] = useState(false);
-    const [createQuestion] = useMutation(CREATE_QUESTION);
+    // const [showAlert, setShowAlert] = useState(false);
+    // const [createQuestion] = useMutation(CREATE_QUESTION);
+    // const socket = io('http://localhost:3001');
+
+    useEffect(() => {
+        socket.emit("start-game");
+        socket.on("end-question", (voteCount1, voteCount2) => {
+            console.log('end-question');
+            setVoteCount1(voteCount1);
+            setVoteCount2(voteCount2);
+            setFlag(false);
+        });
+        socket.on("vote-update", (vote1, vote2) => {
+            setVoteCount1(vote1);
+            setVoteCount2(vote2);
+        })
+        socket.on("next-question", () => {
+            console.log('next-question');
+            setOptionOne('');
+            setOptionTwo('');
+            setQuestionOneAnswered(false);
+            setQuestionTwoAnswered(false);
+            setVoteCount1(0);
+            setVoteCount2(0);
+            setFlag(true);
+        });
+        socket.on("question-created-server", (isQuestion1, question) => {
+            console.log('question-created-server');
+            if (isQuestion1) {
+                setOptionOne(question);
+                setQuestionOneAnswered(true);
+            } else {
+                setOptionTwo(question);
+                setQuestionTwoAnswered(true);
+            }
+        });
+    }, [socket]);
 
 
     const handleQuestionOneSubmit = async (event) => {
@@ -62,11 +72,7 @@ function AnswerQ({socket}) {
         socket.emit("question-created", true, optionOne);
         console.log("submitting1");
 
-        setQuestionAnswered({
-            ...questionAnswered,
-            questionOne: true,
-
-        })
+        setQuestionOneAnswered(true);
     }
 
     const handleQuestionTwoSubmit = async (event) => {
@@ -85,11 +91,7 @@ function AnswerQ({socket}) {
         socket.emit("question-created", false, optionTwo);
         console.log("submitting2");
 
-        setQuestionAnswered({
-            ...questionAnswered,
-            questionTwo: true,
-
-        })
+        setQuestionTwoAnswered(true);
     };
 
     const answerQuestion1 = (event) => {
@@ -112,7 +114,7 @@ function AnswerQ({socket}) {
                         <CardGroup className='Game'>
                             <Card border="light" className='choiceOne'>
                                 <Card.Body >
-                                    {questionAnswered.questionOne ?
+                                    {questionOneAnswered ?
                                         (
                                             <Button className='optionOne' onClick={answerQuestion1}>
                                                 {optionOne}
@@ -137,7 +139,7 @@ function AnswerQ({socket}) {
                             </Card>
                             <Card border="light" className='choiceTwo'>
                                 <Card.Body>
-                                    {questionAnswered.questionTwo ?
+                                    {questionTwoAnswered ?
                                         (
                                             <Button className='optionTwo' onClick={answerQuestion2}>
                                                 {optionTwo}
@@ -166,11 +168,11 @@ function AnswerQ({socket}) {
                             <h1 className="text-center">Answers</h1>
                             <CardGroup className='Game'>
                                 <Card border="dark">
-                                    <Card.Title>Percent</Card.Title>
+                                    <Card.Title>{voteCount1 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
                                     <Card.Body>{optionOne}</Card.Body>
                                 </Card>
                                 <Card border="dark">
-                                    <Card.Title>Percent</Card.Title>
+                                    <Card.Title>{voteCount2 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
                                     <Card.Body>{optionTwo}</Card.Body>
                                 </Card>
 
