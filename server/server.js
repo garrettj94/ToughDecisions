@@ -3,7 +3,7 @@ const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const socketIO = require('socket.io');
-const http = require('http');
+const https = require('https');
 require('dotenv').config({ path: '../.env' });
 
 
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-let httpServer = http.createServer(app);
+let httpServer = https.createServer(app);
 let io = socketIO(httpServer, {
   cors: {
     origin: ["http://localhost:3000"]
