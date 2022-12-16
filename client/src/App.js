@@ -9,7 +9,7 @@ import CreateQ from './components/createQ';
 import AnswerQ from './components/answerQ';
 import Profile from './components/profile';
 import Store from './components/store';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import {io} from 'socket.io-client'
 
 const httpLink = createHttpLink({ uri: '/graphql' })
@@ -32,7 +32,12 @@ const client = new ApolloClient({
 function App() {
   // const socket = io('http://localhost:3001')
   // socket.emit("hello", { name: "John" });
-  const socket = io('http://localhost:3001');
+  let socket;
+  if (process.env.NODE_ENV === 'production') {
+    socket = io(`http://toughdecisions.herokuapp.com:${process.env.PORT}`)
+  } else {
+    socket = io('http://localhost:3001');
+  }
   return (
     <ApolloProvider client={client}>
       <div>
