@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 let httpServer = http.createServer(app);
 let io = socketIO(httpServer, {
   cors: {
-    origin: ["http://localhost:3000"]
+    origin: ["http://localhost:3000", "https://toughdecisions.herokuapp.com/"]
   }
 });
 
