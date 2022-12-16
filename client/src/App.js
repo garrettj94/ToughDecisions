@@ -34,7 +34,7 @@ function App() {
   // socket.emit("hello", { name: "John" });
   let socket;
   if (process.env.NODE_ENV === 'production') {
-    socket = io(`http://toughdecisions.herokuapp.com:${process.env.PORT}`)
+    socket = io(`https://toughdecisions.herokuapp.com:${process.env.PORT}`)
   } else {
     socket = io('http://localhost:3001');
   }
