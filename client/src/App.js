@@ -39,7 +39,7 @@ function App() {
         <Router>
           <Navigationbar />
           <Routes>
-            <Route path="/" element={<Home />}></Route>
+            <Route path="/" element={<Home socket={socket}/>}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/answer" element={<AnswerQ socket={socket} />}></Route>
             <Route path="/profile" element={<Profile />}></Route>

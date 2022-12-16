@@ -1,12 +1,9 @@
 import React from "react";
 import { Form, Button, Card, CardGroup} from 'react-bootstrap';
-import {io} from 'socket.io-client'
 import { Link } from 'react-router-dom';
 
 
-function Home() {
-
-  const socket = io('http://localhost:3001');
+function Home({socket}) {
 
   function joinGame(){
     socket.emit('joinGame');
