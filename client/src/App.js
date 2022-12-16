@@ -32,7 +32,12 @@ const client = new ApolloClient({
 function App() {
   // const socket = io('http://localhost:3001')
   // socket.emit("hello", { name: "John" });
-  const socket = io('http://localhost:3001');
+  let socket;
+  if (process.env.NODE_ENV === 'production') {
+    socket = io(`http://toughdecisions.herokuapp.com:${process.env.PORT}`)
+  } else {
+    socket = io('http://localhost:3001');
+  }
   return (
     <ApolloProvider client={client}>
       <div>
