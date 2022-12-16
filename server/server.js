@@ -81,6 +81,7 @@ io.on("connection", socket => {
     } else {
       vote2++;
     }
+    io.emit("vote-update", vote1, vote2);
   });
 
   socket.on("start-game", () => {
@@ -106,6 +107,7 @@ const startGame = () => {
     if (secondsLeft === 0) {
       console.log("ending");
       io.emit("end-question", vote1, vote2);
+      console.log('end-question');
       clearInterval(timer);
       nextGame();
     }
@@ -124,6 +126,7 @@ const nextGame = () => {
     secondsLeft--;
     if (secondsLeft === 0) {
       io.emit("next-question");
+      console.log('next-question');
       clearInterval(timer);
       startGame();
     }
