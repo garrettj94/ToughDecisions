@@ -165,27 +165,29 @@ function AnswerQ({socket}) {
                     ) :
                     (
                         <>
-                            <h1 className="text-center">Answers</h1>
-                            <CardGroup className='Game'>
-                                <Card border="dark">
+                            <h1 className="answerPageTitle">Answers</h1>
+                            <CardGroup className="votePage">
+                                <div>
+                                <Card border="dark" className="voteOne">
                                     <Card.Title>{voteCount1 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
                                     <Card.Body>{optionOne}</Card.Body>
                                 </Card>
-                                <Card border="dark">
+                                </div>
+                                <div>
+                                <Card border="dark" className="voteTwo">
                                     <Card.Title>{voteCount2 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
                                     <Card.Body>{optionTwo}</Card.Body>
                                 </Card>
-
+                                </div>
                             </CardGroup>
                         </>
                     )
             }
-
             <Button className='leaveBtn' variant='secondary' to='/' as={Link}>
                 <div id='leaveGameBtn'>leave game</div>
             </Button>
-
         </div>
     );
+    
 }
 export default AnswerQ

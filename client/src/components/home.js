@@ -50,18 +50,13 @@ function Home({socket}) {
           </Card.Body>
         </Card>
         <Card>
-          <Card.Body>
+        <Card.Body>
           <Form className="multiStart">
               <Form.Group >
                 <Form.Label className="Friends">Play With Friends!</Form.Label>
               </Form.Group>
-              <Button variant="secondary"  id="CreateGameBtn" onClick={ 
-               createGame
-
-              } > Create Game </Button>
-              <Button variant="secondary" id="JoinGameBtn" onClick={ 
-               joinGame
-              }> Join Game </Button>
+              <Button className='joinGameBtn' variant="secondary" id="JoinGameBtn"  to="/answer" as={Link}
+              > Join Game </Button>
             </Form>
           </Card.Body>
         </Card>
@@ -69,5 +64,7 @@ function Home({socket}) {
     </div>
   );
 }
-
 export default Home;
+// <Button variant="secondary"  id="CreateGameBtn" onClick={
+//   createGame
+//  } > Create Game </Button>
