@@ -81,7 +81,7 @@
   left: 31%; */
   justify-content: center;
 }
-
+/* 
 #CreateGameBtn {
   position: relative;
   left: 55%;
@@ -89,7 +89,7 @@
   font-size: xx-large;
   text-decoration: underline;
   font-family: cursive, fantasy;
-}
+} */
 
 #JoinGameBtn {
   position: relative;
@@ -173,4 +173,22 @@
   text-decoration: underline;
   position: relative;
   top: 30px;
+}
+
+.profileQuestions{
+  text-align: center;
+  width: 80vw;
+  position: relative;
+  left: 11%;
+  height: 40vw;
+  bottom: 8vw;
+ 
+
+}
+.profileBackground{
+  background-image: url(./assets/red-grunge-style-coming-soon-design_1017-26691.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+
 }
