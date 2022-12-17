@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 import { CREATE_QUESTION } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 import { Link } from 'react-router-dom';
-import { Card, CardGroup, Button, Form } from 'react-bootstrap';
+import { Card, CardGroup, Button, Form, ProgressBar } from 'react-bootstrap';
 
 // Step 1 add flag from socket io when question is active
 // The flag will make questions render on page
 // When question is answered the flag is set to inactive and only shows results
 // When timer runs out backend socket emits event to change flag to active and loads new questions
 
-function AnswerQ({socket}) {
+function AnswerQ({ socket }) {
     const [flag, setFlag] = useState(true);
     const [questionOneAnswered, setQuestionOneAnswered] = useState(false);
     const [questionTwoAnswered, setQuestionTwoAnswered] = useState(false);
+    const [timer, setTimer] = useState(20)
     const [voteCount1, setVoteCount1] = useState(0);
     const [voteCount2, setVoteCount2] = useState(0);
     const [optionOne, setOptionOne] = useState('');
@@ -107,78 +108,81 @@ function AnswerQ({socket}) {
     //able to type 
 
     return (
-        <div id='gameImg'>
+        <div>
             {
                 flag ?
                     (
-                        <CardGroup className='Game'>
-                            <Card border="light" className='choiceOne'>
-                                <Card.Body >
-                                    {questionOneAnswered ?
-                                        (
-                                            <Button className='optionOne' onClick={answerQuestion1}>
-                                                {optionOne}
-                                            </Button>
-                                        ) :
-                                        (
-
-                                            <Form onSubmit={handleQuestionOneSubmit}>
-                                                <Form.Group className="mb-3" controlId="basicOption">
-                                                    <Form.Label>Option One</Form.Label>
-                                                    <Form.Control value={optionOne} onChange={(event) => setOptionOne(event.target.value)} type="text" placeholder="Enter option" />
-                                                </Form.Group>
-                                                <Button variant="primary" type="submit" >
-                                                    Submit
+                        <>
+                            <ProgressBar animated now={timer} />
+                            <CardGroup className='Game'>
+                                <Card border="light" className='choiceOne'>
+                                    <Card.Body >
+                                        {questionOneAnswered ?
+                                            (
+                                                <Button className='optionOne' onClick={answerQuestion1}>
+                                                    {optionOne}
                                                 </Button>
-                                            </Form>
+                                            ) :
+                                            (
 
-                                        )
-                                    }
+                                                <Form onSubmit={handleQuestionOneSubmit}>
+                                                    <Form.Group className="mb-3" controlId="basicOption">
+                                                        <Form.Label>Option One</Form.Label>
+                                                        <Form.Control value={optionOne} onChange={(event) => setOptionOne(event.target.value)} type="text" placeholder="Enter option" />
+                                                    </Form.Group>
+                                                    <Button variant="primary" type="submit" >
+                                                        Submit
+                                                    </Button>
+                                                </Form>
 
-                                </Card.Body>
-                            </Card>
-                            <Card border="light" className='choiceTwo'>
-                                <Card.Body>
-                                    {questionTwoAnswered ?
-                                        (
-                                            <Button className='optionTwo' onClick={answerQuestion2}>
-                                                {optionTwo}
-                                            </Button>
-                                        ) :
-                                        (
+                                            )
+                                        }
 
-                                            <Form onSubmit={handleQuestionTwoSubmit}>
-                                                <Form.Group className="mb-3" controlId="basicOption">
-                                                    <Form.Label>Option Two</Form.Label>
-                                                    <Form.Control value={optionTwo} onChange={(event) => setOptionTwo(event.target.value)} type="text" placeholder="Enter option" />
-                                                </Form.Group>
-                                                <Button variant="primary" type="submit" >
-                                                    Submit
+                                    </Card.Body>
+                                </Card>
+                                <Card border="light" className='choiceTwo'>
+                                    <Card.Body>
+                                        {questionTwoAnswered ?
+                                            (
+                                                <Button className='optionTwo' onClick={answerQuestion2}>
+                                                    {optionTwo}
                                                 </Button>
-                                            </Form>
+                                            ) :
+                                            (
 
-                                        )
-                                    }
-                                </Card.Body>
-                            </Card>
-                        </CardGroup>
+                                                <Form onSubmit={handleQuestionTwoSubmit}>
+                                                    <Form.Group className="mb-3" controlId="basicOption">
+                                                        <Form.Label>Option Two</Form.Label>
+                                                        <Form.Control value={optionTwo} onChange={(event) => setOptionTwo(event.target.value)} type="text" placeholder="Enter option" />
+                                                    </Form.Group>
+                                                    <Button variant="primary" type="submit" >
+                                                        Submit
+                                                    </Button>
+                                                </Form>
+
+                                            )
+                                        }
+                                    </Card.Body>
+                                </Card>
+                            </CardGroup></>
+
                     ) :
                     (
                         <>
 
-                            <h1 className="answerPageTitle">Answers</h1>
+                            <h1 className="text-center">Answers</h1>
                             <CardGroup className="votePage">
                                 <div>
-                                <Card border="dark" className="voteOne">
-                                    <Card.Title>{voteCount1 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
-                                    <Card.Body>{optionOne}</Card.Body>
-                                </Card>
+                                    <Card border="dark" className="voteOne">
+                                        <Card.Title>{voteCount1 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
+                                        <Card.Body>{optionOne}</Card.Body>
+                                    </Card>
                                 </div>
                                 <div>
-                                <Card border="dark" className="voteTwo">
-                                    <Card.Title>{voteCount2 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
-                                    <Card.Body>{optionTwo}</Card.Body>
-                                </Card>
+                                    <Card border="dark" className="voteTwo">
+                                        <Card.Title>{voteCount2 / (voteCount1 + voteCount2) * 100}% voted for:</Card.Title>
+                                        <Card.Body>{optionTwo}</Card.Body>
+                                    </Card>
                                 </div>
                             </CardGroup>
                         </>
@@ -189,6 +193,6 @@ function AnswerQ({socket}) {
             </Button>
         </div>
     );
-    
+
 }
 export default AnswerQ

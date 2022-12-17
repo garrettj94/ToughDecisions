@@ -93,7 +93,7 @@
 
 #JoinGameBtn {
   position: relative;
-  right: 10%;
+  left: 30%;
   top: 300px;
   font-size: xx-large;
   text-decoration: underline;
@@ -153,7 +153,7 @@
 }
 
 .voteOne {
-  width: 485px;
+  width: 40vw;
   /* height: 50%; */
   position: relative;
   left: 110px;
@@ -162,26 +162,15 @@
 }
 
 .voteTwo {
-  width: 485px;
+  width: 40vw;
   /* height: 500px; */
   position: relative;
-  left: 375px;
+  left: 150px;
   top: 100px;
-}
-
-.answerPageTitle {
-  position: relative;
-  left: 43%;
 }
 
 #leaveGameBtn {
   text-decoration: underline;
   position: relative;
   top: 30px;
-}
-
-#main {
-  background-image: url(./assets/geometric-black-and-gold-background-free-vector.jpg);
-  background-size: cover;
-  height: 800px;
 }
