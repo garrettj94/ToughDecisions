@@ -10,7 +10,8 @@ import AnswerQ from './components/answerQ';
 import Profile from './components/profile';
 import Store from './components/store';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import {io} from 'socket.io-client'
+import { io } from 'socket.io-client'
+import auth from './utils/auth';
 
 const httpLink = createHttpLink({ uri: '/graphql' })
 
@@ -39,12 +40,20 @@ function App() {
         <Router>
           <Navigationbar />
           <Routes>
-            <Route path="/" element={<Login/>}></Route>
-            <Route path="/home" element={<Home socket={socket} />}></Route>
-            <Route path="/answer" element={<AnswerQ socket={socket} />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/store" element={<Store />}></Route>
-            <Route path="/createq" element={<CreateQ />}></Route>
+            <Route path="/" element={auth.isLoggedIn() ?
+              <Home socket={socket} /> :
+              <Login />}
+            ></Route>
+            <Route path="/home" element={!auth.isLoggedIn() ?
+              <Login /> : <Home socket={socket} />}></Route>
+            <Route path="/answer" element={!auth.isLoggedIn() ?
+              <Login /> : <AnswerQ socket={socket} />}></Route>
+            <Route path="/profile" element={!auth.isLoggedIn() ?
+              <Login /> : <Profile />}></Route>
+            <Route path="/store" element={!auth.isLoggedIn() ?
+              <Login /> : <Store />}></Route>
+            <Route path="/createq" element={!auth.isLoggedIn() ?
+              <Login /> : <CreateQ />}></Route>
           </Routes>
         </Router>
       </div>

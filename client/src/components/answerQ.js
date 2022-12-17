@@ -11,6 +11,7 @@ import { Card, CardGroup, Button, Form, ProgressBar } from 'react-bootstrap';
 
 function AnswerQ({ socket }) {
     const [flag, setFlag] = useState(true);
+    const [complete, setComplete] = useState(false);
     const [questionOneAnswered, setQuestionOneAnswered] = useState(false);
     const [questionTwoAnswered, setQuestionTwoAnswered] = useState(false);
     const [timer, setTimer] = useState(20);
@@ -28,6 +29,7 @@ function AnswerQ({ socket }) {
             setTimer(timeleft);
         });
         socket.on("end-question", (voteCount1, voteCount2) => {
+            setComplete(true);
             setVoteCount1(voteCount1);
             setVoteCount2(voteCount2);
             setFlag(false);
@@ -37,6 +39,7 @@ function AnswerQ({ socket }) {
             setVoteCount2(vote2);
         })
         socket.on("next-question", () => {
+            setComplete(false);
             setTimer(19);
             setOptionOne('');
             setOptionTwo('');
@@ -151,6 +154,7 @@ function AnswerQ({ socket }) {
                         <>
 
                             <h1 className="text-center">Answers</h1>
+                            {complete && (<h2 className="text-center">The results are in!</h2>)}
                             <CardGroup className="votePage">
                                 <div>
                                     <Card border="dark" className="voteOne">
