@@ -28,7 +28,6 @@ function AnswerQ({ socket }) {
             setTimer(timeleft);
         });
         socket.on("end-question", (voteCount1, voteCount2) => {
-            console.log('end-question');
             setVoteCount1(voteCount1);
             setVoteCount2(voteCount2);
             setFlag(false);
@@ -39,7 +38,6 @@ function AnswerQ({ socket }) {
         })
         socket.on("next-question", () => {
             setTimer(19);
-            console.log('next-question');
             setOptionOne('');
             setOptionTwo('');
             setQuestionOneAnswered(false);
@@ -49,7 +47,6 @@ function AnswerQ({ socket }) {
             setFlag(true);
         });
         socket.on("question-created-server", (isQuestion1, question) => {
-            console.log('question-created-server');
             if (isQuestion1) {
                 setOptionOne(question);
                 setQuestionOneAnswered(true);
@@ -63,49 +60,28 @@ function AnswerQ({ socket }) {
 
     const handleQuestionOneSubmit = async (event) => {
         event.preventDefault();
-
-        const submit = event.currentTarget;
-        console.log(submit)
-        // try {
-        //     await createQuestion({
-        //         variables: { ...questionFormData }
-        //     });
-        // } catch (err) {
-        //     console.error(err);
-        //     setShowAlert(true)
-        // }
+        if (optionOne === "")return;
         socket.emit("question-created", true, optionOne);
-        console.log("submitting1");
-
         setQuestionOneAnswered(true);
     }
 
     const handleQuestionTwoSubmit = async (event) => {
         event.preventDefault();
-
-        const submit = event.currentTarget;
-        console.log(submit)
-        // try {
-        //     await createQuestion({
-        //         variables: { ...questionFormData }
-        //     });
-        // } catch (err) {
-        //     console.error(err);
-        //     setShowAlert(true)
-        // }
+        if (optionTwo === "")return;
         socket.emit("question-created", false, optionTwo);
-        console.log("submitting2");
 
         setQuestionTwoAnswered(true);
     };
 
     const answerQuestion1 = (event) => {
         event.preventDefault();
+        if (!questionTwoAnswered)return;
         socket.emit("vote", true);
         setFlag(false);
     }
     const answerQuestion2 = (event) => {
         event.preventDefault();
+        if (!questionOneAnswered)return;
         socket.emit("vote", false);
         setFlag(false);
     }
