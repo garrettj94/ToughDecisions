@@ -165,6 +165,7 @@ function AnswerQ({socket}) {
                     ) :
                     (
                         <>
+
                             <h1 className="answerPageTitle">Answers</h1>
                             <CardGroup className="votePage">
                                 <div>
