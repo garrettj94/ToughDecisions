@@ -6,7 +6,8 @@ import { useMutation } from '@apollo/client'
 import { Form, Button, Card, CardGroup } from 'react-bootstrap';
 
 function Login() {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '', username: ''});
+  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [signupFormData, setSignupFormData] =useState({ email: '', password: '', username: '' })
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [createUser] = useMutation(CREATE_USER);
@@ -15,6 +16,11 @@ function Login() {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
+  }
+
+  const signupInputChange = (event) => {
+    const { name, value } = event.target;
+    setSignupFormData({ ...signupFormData, [name]: value });
   }
 
   const handleFormSubmit = async (event) => {
@@ -37,7 +43,6 @@ function Login() {
     }
 
     setUserFormData({
-      username: '',
       email: '',
       password: '',
     });
@@ -54,7 +59,7 @@ function Login() {
 
     try {
       const { data } = await createUser({
-        variables: { ...userFormData }
+        variables: { ...signupFormData }
       });
       Auth.login(data.addUser.token);
     } catch (err) {
@@ -62,13 +67,13 @@ function Login() {
       setShowAlert(true);
     }
 
-    setUserFormData({
+    setSignupFormData({
       username: '',
       email: '',
       password: '',
     });
   }
-
+ 
   return (
     <div className="login">
       <CardGroup>
@@ -92,19 +97,19 @@ function Login() {
             <Form noValidate validated={validated} onSubmit={signupFormSubmit}>
               <Form.Group controlId="signupformEmail">
                 <Form.Label>Email Address</Form.Label>
-                <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required/>
+                <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={signupInputChange} value={signupFormData.email} required/>
               </Form.Group>
-              <Form.Group controlId="signupformEmail">
+              <Form.Group controlId="signupformUsername">
                 <Form.Label>Username</Form.Label>
-                <Form.Control type="username" placeholder="Username" name='username' onChange={handleInputChange} value={userFormData.username} required/>
+                <Form.Control type="username" placeholder="Username" name='username' onChange={signupInputChange} value={signupFormData.username} required/>
               </Form.Group>
               <Form.Group controlId="signupformPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password}/>
+                <Form.Control type="password" placeholder="Password" name='password' onChange={signupInputChange} value={signupFormData.password}/>
               </Form.Group>
               <Form.Group controlId="formPasswordConfirm">
                 <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" name='confirm_password' required/>
               </Form.Group>
               <Button variant="secondary" type="submit"> Sign Up </Button>
             </Form>
