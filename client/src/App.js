@@ -39,8 +39,8 @@ function App() {
         <Router>
           <Navigationbar />
           <Routes>
-            <Route path="/" element={<Home socket={socket}/>}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Login/>}></Route>
+            <Route path="/home" element={<Home socket={socket} />}></Route>
             <Route path="/answer" element={<AnswerQ socket={socket} />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/store" element={<Store />}></Route>
