@@ -20,7 +20,7 @@ const server = new ApolloServer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
@@ -69,18 +69,20 @@ let vote1 = 0;
 let vote2 = 0;
 let inGame = false;
 io.on("connection", socket => {
-  // socket.join("answerQ.js");
   socket.on("question-created", (isQuestion1, question) => {
+    if (question === "") return;
     if (isQuestion1) {
       question1 = question;
-      socket.broadcast.emit("question-created-server", isQuestion1, question);
+      io.emit("question-created-server", isQuestion1, question);
     } else {
       question2 = question;
-      socket.broadcast.emit("question-created-server", isQuestion1, question);
+      io.emit("question-created-server", isQuestion1, question);
     }
+    if (question1 !== "" && question2 !== "") startGame();
   });
 
   socket.on("vote", (isQuestion1) => {
+    if (!inGame) return;
     if (isQuestion1) {
       vote1++;
     } else {
@@ -90,11 +92,15 @@ io.on("connection", socket => {
   });
 
   socket.on("start-game", () => {
-    if (inGame) return;
-    io.emit("next-question");
-    startGame();
+    if (question1 !== "") {
+      socket.emit("question-created-server", true, question1);
+    }
+    if (question2 !== "") {
+      socket.emit("question-created-server", false, question2);
+    }
+    socket.emit("vote-update", vote1, vote2);
+    return;
   });
-
   socket.on("end-game", () => {
 
   });
@@ -108,7 +114,7 @@ const startGame = () => {
   console.log("starting");
   const timer = setInterval(() => {
     secondsLeft--;
-    io.emit("timer-update", secondsLeft-1);
+    io.emit("timer-update", secondsLeft - 1);
     console.log(secondsLeft);
     if (secondsLeft === 0) {
       console.log("ending");
@@ -132,70 +138,11 @@ const nextGame = () => {
     console.log(secondsLeft);
     secondsLeft--;
     if (secondsLeft === 0) {
+      inGame = false;
       io.emit("next-question");
       console.log('next-question');
       clearInterval(timer);
-      startGame();
     }
   }, 1000);
 
 }
-
-// io.to("room1").emit("some event");
-
-// // broadcast to a room from a given socket:
-// io.on("connection", function(socket){
-//   socket.to("some room").emit("some event");
-// });
-
-// io.on("connection", socket => {
-//   socket.on("private message", (anotherSocketId, msg) => {
-//     socket.to(anotherSocketId).emit("private message", socket.id, msg);
-//   });
-// });
-
-
-// // broadcast data to each device / tab of a given user
-// io.on("connection", async (socket) => {
-//   const userId = await fetchUserId(socket);
-
-//   socket.join(userId);
-
-//   // and then later
-//   io.to(userId).emit("hi");
-// });
-// // send notifications about a given entity
-// io.on("connection", async (socket) => {
-//   const projects = await fetchProjects(socket);
-
-//   projects.forEach(project => socket.join("project:" + project.id));
-
-//   // and then later
-//   io.to("project:4321").emit("project updated");
-// });
-
-// const details = await fetchDetails();
-// io.to("room2").emit("details", details);
-
-// io.on("connection", socket => {
-//   socket.on("disconnecting", () => {
-//     console.log(socket.rooms); // the Set contains at least the socket ID
-//   });
-
-//   socket.on("disconnect", () => {
-//     socket.rooms.size === 0
-//   });
-// });
-
-
-// const rooms = io.of("/").adapter.rooms;
-// const sids = io.of("/").adapter.sids;
-
-
-// io.of("/").adapter.on("create-room", (room) => {
-//   console.log(`room ${room} was created`);
-// });
-
-// io.of("/").adapter.on("join-room", (room, id) => {
-//   console.log(`socket ${id} has joined room ${room}`);
-// });
