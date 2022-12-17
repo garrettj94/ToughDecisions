@@ -131,6 +131,10 @@
 
 }
 
+.progress-bar {
+  transition: width 1s linear;
+}
+
 .leaveBtn {
   position: relative;
   left: 32%;
