@@ -71,112 +71,12 @@ function Login() {
       username: '',
       email: '',
       password: '',
+      confirmPassword:'',
     });
 
-    // const checkValidity = () => {
-    //   let fields = this.state.fields;
-    //   let errors = {};
-    //   let formIsValid = true;
 
-    //   //Name check if name is empty or not
-    //   if (!fields["name"]) {
-    //     formIsValid = false;
-    //     errors["name"] = "Cannot be empty";
-    //   }
-    //   //name should not contain special char
-    //   if (typeof fields["name"] !== "undefined") {
-    //     if (!fields["name"].match(/^[a-zA-Z]+$/)) {
-    //       formIsValid = false;
-    //       errors["name"] = "Only letters";
-    //     }
-    //   }
+}  
 
-    //   //Email should not be empty
-    //   if (!fields["email"]) {
-    //     formIsValid = false;
-    //     errors["email"] = "Cannot be empty";
-    //   }
-    //   //validating email
-    //   if (typeof fields["email"] !== "undefined") {
-    //     let lastAtPos = fields["email"].lastIndexOf('@');
-    //     let lastDotPos = fields["email"].lastIndexOf('.');
-
-    //     if (!(lastAtPos < lastDotPos && lastAtPos > 0
-    //       && fields["email"].indexOf('@@') == -1 &&
-    //       lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
-    //       formIsValid = false;
-    //       errors["email"] = "Email is not valid";
-    //     }
-    //   }
-
-    //   this.setState({ errors: errors });
-    //   return formIsValid;
-    // }
-
-    // //after submit form it will be called
-    // handleSubmit = (e) => {
-    //   e.preventDefault();
-    //   if (this.handleValidation())
-    //     alert("form submitted successfully")
-    // }
-
-    // //updating the field value
-    // handleUpdate(field, e){
-    //   let fields = this.state.fields;
-    //   fields[fields] = e.target.value;
-    //   this.setState({ fields });
-    // }
-
-  }
-
-
-
-
-    return (
-      <div className="login">
-        <CardGroup>
-          <Card>
-            <Card.Body>
-              <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-                <Form.Group controlId="loginformEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required />
-                </Form.Group>
-                <Form.Group controlId="loginformPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password} required />
-                </Form.Group>
-                <Button variant="secondary" type="submit"> Login </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Form noValidate validated={validated} onSubmit={signupFormSubmit}>
-                <Form.Group controlId="signupformEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required />
-                </Form.Group>
-                <Form.Group controlId="signupformEmail">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control type="username" placeholder="Username" name='username' onChange={handleInputChange} value={userFormData.username} required />
-                </Form.Group>
-                <Form.Group controlId="signupformPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password} />
-                </Form.Group>
-                <Form.Group controlId="formPasswordConfirm">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Button variant="secondary" type="submit"> Sign Up </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </CardGroup>
-      </div>
-    );
-  }
   
   return (
     <div className="login">
@@ -226,3 +126,54 @@ function Login() {
 
 
 export default Login;
+
+
+
+
+
+
+// return (
+  //     <div className="login">
+  //       <CardGroup>
+  //         <Card>
+  //           <Card.Body>
+  //             <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+  //               <Form.Group controlId="loginformEmail">
+  //                 <Form.Label>Email Address</Form.Label>
+  //                 <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required />
+  //               </Form.Group>
+  //               <Form.Group controlId="loginformPassword">
+  //                 <Form.Label>Password</Form.Label>
+  //                 <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password} required />
+  //               </Form.Group>
+  //               <Button variant="secondary" type="submit"> Login </Button>
+  //             </Form>
+  //           </Card.Body>
+  //         </Card>
+  //         <Card>
+  //           <Card.Body>
+  //             <Form noValidate validated={validated} onSubmit={signupFormSubmit}>
+  //               <Form.Group controlId="signupformEmail">
+  //                 <Form.Label>Email Address</Form.Label>
+  //                 <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required />
+  //               </Form.Group>
+  //               <Form.Group controlId="signupformEmail">
+  //                 <Form.Label>Username</Form.Label>
+  //                 <Form.Control type="username" placeholder="Username" name='username' onChange={handleInputChange} value={userFormData.username} required />
+  //               </Form.Group>
+  //               <Form.Group controlId="signupformPassword">
+  //                 <Form.Label>Password</Form.Label>
+  //                 <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password} />
+  //               </Form.Group>
+  //               <Form.Group controlId="formPasswordConfirm">
+  //                 <Form.Label>Confirm Password</Form.Label>
+  //                 <Form.Control type="password" placeholder="Password" />
+  //               </Form.Group>
+  //               <Button variant="secondary" type="submit"> Sign Up </Button>
+  //             </Form>
+  //           </Card.Body>
+  //         </Card>
+  //       </CardGroup>
+  //     </div>
+  //   );
+  // }
