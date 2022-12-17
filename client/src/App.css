@@ -81,7 +81,7 @@
   left: 31%; */
   justify-content: center;
 }
-
+/* 
 #CreateGameBtn {
   position: relative;
   left: 55%;
@@ -89,7 +89,7 @@
   font-size: xx-large;
   text-decoration: underline;
   font-family: cursive, fantasy;
-}
+} */
 
 #JoinGameBtn {
   position: relative;
