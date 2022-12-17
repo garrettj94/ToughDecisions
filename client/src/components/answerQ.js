@@ -13,7 +13,7 @@ function AnswerQ({ socket }) {
     const [flag, setFlag] = useState(true);
     const [questionOneAnswered, setQuestionOneAnswered] = useState(false);
     const [questionTwoAnswered, setQuestionTwoAnswered] = useState(false);
-    const [timer, setTimer] = useState(20)
+    const [timer, setTimer] = useState(20);
     const [voteCount1, setVoteCount1] = useState(0);
     const [voteCount2, setVoteCount2] = useState(0);
     const [optionOne, setOptionOne] = useState('');
@@ -24,6 +24,9 @@ function AnswerQ({ socket }) {
 
     useEffect(() => {
         socket.emit("start-game");
+        socket.on("timer-update", (timeleft) => {
+            setTimer(timeleft);
+        });
         socket.on("end-question", (voteCount1, voteCount2) => {
             console.log('end-question');
             setVoteCount1(voteCount1);
@@ -35,6 +38,7 @@ function AnswerQ({ socket }) {
             setVoteCount2(vote2);
         })
         socket.on("next-question", () => {
+            setTimer(19);
             console.log('next-question');
             setOptionOne('');
             setOptionTwo('');
@@ -113,7 +117,7 @@ function AnswerQ({ socket }) {
                 flag ?
                     (
                         <>
-                            <ProgressBar animated now={timer} />
+                            <ProgressBar animated now={timer} max={19} />
                             <CardGroup className='Game'>
                                 <Card border="light" className='choiceOne'>
                                     <Card.Body >

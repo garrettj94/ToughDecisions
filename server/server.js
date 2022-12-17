@@ -108,6 +108,7 @@ const startGame = () => {
   console.log("starting");
   const timer = setInterval(() => {
     secondsLeft--;
+    io.emit("timer-update", secondsLeft-1);
     console.log(secondsLeft);
     if (secondsLeft === 0) {
       console.log("ending");
@@ -120,6 +121,7 @@ const startGame = () => {
 };
 
 const nextGame = () => {
+  io.emit("timer-update", 20);
   question1 = "";
   question2 = "";
   vote1 = 0;
