@@ -11,8 +11,10 @@ function Login() {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [incorrectInfoAlert, setIncorrectInfoAlert] = useState(false);
   const [createUser] = useMutation(CREATE_USER);
   const [loginUser] = useMutation(LOGIN_USER)
+  const [passwordAlert, setPasswordAlert] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -46,13 +48,15 @@ function Login() {
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
+      setIncorrectInfoAlert(true);
+      return
     }
 
     setUserFormData({
       email: '',
       password: '',
     });
+    setIncorrectInfoAlert(false);
   };
 
 
@@ -68,7 +72,7 @@ function Login() {
     }
 
     if (passwordConfirmation !== signupFormData.password) {
-      setShowAlert(true);
+      setPasswordAlert(true);
       return 
     }
 
@@ -88,7 +92,8 @@ function Login() {
       password: '',
     });
 
-    setPasswordConfirmation('')
+    setPasswordConfirmation('');
+    setPasswordAlert(false);
 
 
   }
@@ -109,6 +114,7 @@ function Login() {
               </Form.Group>
               <Button variant="secondary" type="submit"> Login </Button>
             </Form>
+            {incorrectInfoAlert && <p> INCORRECT EMAIL OR PASSWORD</p>}
           </Card.Body>
         </Card>
         <Card>
@@ -117,6 +123,7 @@ function Login() {
               <Form.Group controlId="signupformEmail">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={signupInputChange} value={signupFormData.email} required />
+                {showAlert && <p> MUST BE A VALID EMAIL!</p>}
               </Form.Group>
               <Form.Group controlId="signupformUsername">
                 <Form.Label>Username</Form.Label>
@@ -132,6 +139,7 @@ function Login() {
               </Form.Group>
               <Button variant="secondary" type="submit"> Sign Up </Button>
             </Form>
+            {passwordAlert && <p> PASSWORDS MUST MATCH</p>}
           </Card.Body>
         </Card>
       </CardGroup>
@@ -141,6 +149,8 @@ function Login() {
 
 
 export default Login;
+
+
 
 
 
