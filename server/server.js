@@ -72,9 +72,11 @@ io.on("connection", socket => {
   socket.on("question-created", (isQuestion1, question) => {
     if (question === "") return;
     if (isQuestion1) {
+      if (question1 !== "")return;
       question1 = question;
       io.emit("question-created-server", isQuestion1, question);
     } else {
+      if (question2 !== "")return;
       question2 = question;
       io.emit("question-created-server", isQuestion1, question);
     }
