@@ -7,7 +7,8 @@ import { Form, Button, Card, CardGroup } from 'react-bootstrap';
 
 function Login() {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [signupFormData, setSignupFormData] =useState({ email: '', password: '', username: '' })
+  const [signupFormData, setSignupFormData] = useState({ email: '', password: '', username: '' });
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [createUser] = useMutation(CREATE_USER);
@@ -22,6 +23,12 @@ function Login() {
     const { name, value } = event.target;
     setSignupFormData({ ...signupFormData, [name]: value });
   }
+
+  const passwordConfirmationChange = (event) => {
+    const { value } = event.target;
+    setPasswordConfirmation( value );
+  }
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -60,6 +67,11 @@ function Login() {
       event.stopPropagation();
     }
 
+    if (passwordConfirmation !== signupFormData.password) {
+      setShowAlert(true);
+      return 
+    }
+
     try {
       const { data } = await createUser({
         variables: { ...signupFormData }
@@ -74,12 +86,13 @@ function Login() {
       username: '',
       email: '',
       password: '',
-      confirmPassword:'',
     });
 
+    setPasswordConfirmation('')
 
-}  
-  
+
+  }
+
   return (
     <div className="login">
       <CardGroup>
@@ -88,11 +101,11 @@ function Login() {
             <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
               <Form.Group controlId="loginformEmail">
                 <Form.Label>Email Address</Form.Label>
-                <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required/>
+                <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={handleInputChange} value={userFormData.email} required />
               </Form.Group>
               <Form.Group controlId="loginformPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password} required/>
+                <Form.Control type="password" placeholder="Password" name='password' onChange={handleInputChange} value={userFormData.password} required />
               </Form.Group>
               <Button variant="secondary" type="submit"> Login </Button>
             </Form>
@@ -103,19 +116,19 @@ function Login() {
             <Form noValidate validated={validated} onSubmit={signupFormSubmit}>
               <Form.Group controlId="signupformEmail">
                 <Form.Label>Email Address</Form.Label>
-                <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={signupInputChange} value={signupFormData.email} required/>
+                <Form.Control type="email" placeholder="Example@email.com" name='email' onChange={signupInputChange} value={signupFormData.email} required />
               </Form.Group>
               <Form.Group controlId="signupformUsername">
                 <Form.Label>Username</Form.Label>
-                <Form.Control type="username" placeholder="Username" name='username' onChange={signupInputChange} value={signupFormData.username} required/>
+                <Form.Control type="username" placeholder="Username" name='username' onChange={signupInputChange} value={signupFormData.username} required />
               </Form.Group>
               <Form.Group controlId="signupformPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name='password' onChange={signupInputChange} value={signupFormData.password}/>
+                <Form.Control type="password" placeholder="Password" name='password' onChange={signupInputChange} value={signupFormData.password} required />
               </Form.Group>
               <Form.Group controlId="formPasswordConfirm">
                 <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name='confirm_password' required/>
+                <Form.Control type="password" placeholder="Password" name='confirm_password' onChange={passwordConfirmationChange} value={passwordConfirmation} required />
               </Form.Group>
               <Button variant="secondary" type="submit"> Sign Up </Button>
             </Form>
